@@ -4,7 +4,7 @@ use tokio::io::{AsyncReadExt, AsyncWriteExt};
 use tokio::net::{TcpStream, TcpListener};
 
 #[tokio::main]
-async fn main() -> Result<(), E> {
+async fn main() -> Result<()> {
     // You can use print statements as follows for debugging, they'll be visible when running tests.
     println!("Logs from your program will appear here!");
 
@@ -28,7 +28,7 @@ async fn main() -> Result<(), E> {
     }
 }
 
-async fn handle_connection(stream: &mut TcpStream) -> Result<(), E> {
+async fn handle_connection(stream: &mut TcpStream) -> Result<()> {
     let mut buf = [0;512];
     loop {
         let bytes_read = stream.read(&mut buf).await?;
