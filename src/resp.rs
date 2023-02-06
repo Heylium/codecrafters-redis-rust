@@ -7,7 +7,7 @@ const CARRIAGE_RETURN: u8 = '\r' as u8;
 const NEWLINE: u8 = '\n' as u8;
 
 
-#[derive(Debug)]
+#[derive(Debug, Clone, Eq, PartialEq)]
 pub enum Value {
     SimpleString(String),
 
