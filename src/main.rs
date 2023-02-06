@@ -1,9 +1,9 @@
-mod resp;
-
 use anyhow::Result;
 use tokio::io::{AsyncReadExt, AsyncWriteExt};
 use tokio::net::{TcpStream, TcpListener};
 use resp::Value::{Error, SimpleString};
+
+mod resp;
 
 #[tokio::main]
 async fn main() -> Result<()> {
