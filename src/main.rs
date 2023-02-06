@@ -16,7 +16,7 @@ async fn main() -> Result<()> {
     loop {
         let incoming = listener.accept().await;
         match incoming {
-            Ok((mut stream, _)) => {
+            Ok((stream, _)) => {
                 println!("accepted new connection");
                 tokio::spawn(async move {
                     handle_connection(stream).await.unwrap();
