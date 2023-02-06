@@ -1,5 +1,4 @@
 use anyhow::Result;
-use tokio::io::{AsyncReadExt, AsyncWriteExt};
 use tokio::net::{TcpStream, TcpListener};
 use resp::Value::{Error, SimpleString};
 
@@ -30,7 +29,7 @@ async fn main() -> Result<()> {
     }
 }
 
-async fn handle_connection(stream: TcpStream) -> Result<()> {
+async fn handle_connection(mut stream: TcpStream) -> Result<()> {
     let mut conn = resp::RespConnection::new(stream);
     loop {
         let value = conn.read_value().await?;
