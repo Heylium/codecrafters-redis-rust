@@ -71,6 +71,10 @@ impl RespConnection {
                 return Ok(None);
             }
 
+            if let Some((value, _)) = parse_message(self.buffer.split())? {
+                return Ok(Some(value));
+            }
+
         }
     }
 
