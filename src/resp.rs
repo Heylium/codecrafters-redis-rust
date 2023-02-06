@@ -1,6 +1,6 @@
 use anyhow::{Result, Error};
 use bytes::BytesMut;
-use tokio::io::AsyncReadExt;
+use tokio::io::{AsyncReadExt, AsyncWriteExt};
 use tokio::net::TcpStream;
 
 const CARRIAGE_RETURN: u8 = '\r' as u8;
@@ -72,6 +72,11 @@ impl RespConnection {
             }
 
         }
+    }
+
+    pub async fn write_value(&mut self, value: Value) -> Result<()> {
+        self.stream.write(value.encode().as_bytes()).await?;
+        Ok(())
     }
 }
 
