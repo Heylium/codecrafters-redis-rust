@@ -57,7 +57,8 @@ async fn handle_connection(stream: TcpStream, client_store: Arc<Mutex<Store>>) -
                     if let (Some(BulkString(key)), Some(BulkString(value))) = (args.get(0), args.get(1)) {
                         client_store.lock().unwrap().set(key.clone(), value.clone());
                         SimpleString("OK".to_string())
-                    } else {
+                    }
+                    else {
                         Error("Set requires two arguments".to_string())
                     }
                 }
