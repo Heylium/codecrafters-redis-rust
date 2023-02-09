@@ -55,11 +55,20 @@ async fn handle_connection(stream: TcpStream, client_store: Arc<Mutex<Store>>) -
                 }
                 "set" => {
                     if let (Some(BulkString(key)), Some(BulkString(value))) = (args.get(0), args.get(1)) {
-                        client_store.lock().unwrap().set(key.clone(), value.clone());
+                        if let (Some(BulkString(_)), Some(BulkString(amount))) = (args.get(2), args.get(3)) {
+                            client_store.lock().unwrap().set_with_expiry(
+                                key.clone(),
+                                value.clone(),
+                                amount.parse::<u64>()?,
+                            )
+                        } else {
+                            client_store.lock().unwrap().set(key.clone(), value.clone());
+                        }
+
                         SimpleString("OK".to_string())
                     }
                     else {
-                        Error("Set requires two arguments".to_string())
+                        Error("Set requires two arguments or four arguments".to_string())
                     }
                 }
                 _ => Error(format!("command not implemented: {}", command)),
